@@ -1,4 +1,4 @@
-package main.java.com.bikereleven.castlegame.entity;
+package com.bikereleven.castlegame.entity;
 
 public abstract class Entity {
 

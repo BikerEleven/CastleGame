@@ -1,4 +1,4 @@
-package main.java.com.bikereleven.castlegame;
+package com.bikereleven.castlegame;
 
 public class CastleGame {
 	
@@ -10,7 +10,7 @@ public class CastleGame {
 	
 	/**
 	 * Will figure out the location of the data file and return the file
-	 * @return The datafile as a File 
+	 * @return The data file as a File 
 	 */
 	public static java.io.File getDataFile() {
 		return new java.io.File(getSettingsPath(), "CastleGame.dat");
@@ -26,11 +26,11 @@ public class CastleGame {
 
 		String OS = System.getProperty("os.name").toLowerCase();
 		if ((OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0)) { // Unix|Linux
-			profilePath = "/home/" + System.getProperty("user.name") + "/.BikerEleven/FileLocker/";
+			profilePath = "/home/" + System.getProperty("user.name") + "/.BikerEleven/CastleGame/";
 		} else if (OS.indexOf("win") >= 0) { //Windows
-			profilePath = System.getenv("APPDATA") + "\\BikerEleven\\FileLocker\\";
+			profilePath = System.getenv("APPDATA") + "\\BikerEleven\\CastleGame\\";
 		} else { //Unknown
-			profilePath = java.io.File.separator + "BikerEleven" + java.io.File.separator + "FileLocker" + java.io.File.separator;
+			profilePath = java.io.File.separator + "BikerEleven" + java.io.File.separator + "CastleGame" + java.io.File.separator;
 		}
 
 		return profilePath;
