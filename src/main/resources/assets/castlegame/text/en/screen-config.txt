@@ -1,0 +1,4 @@
+# Syntax is: config_name.unique_name the unique_name can have more .whatevers after the config name
+mainmenu.start=Welcome to Castleprenuer!
+mainmenu.exitgame=Exit
+mainmenu.startgame=Start

@@ -1,5 +1,7 @@
 package com.bikereleven.castlegame;
 
+import com.bikereleven.castlegame.utility.Reference;
+
 public class CastleGame {
 	
 	public static void main(String[] args){
@@ -49,6 +51,7 @@ public class CastleGame {
 		errorText.setText(message);
 
 		javax.swing.JOptionPane.showMessageDialog(parent, errorText, "An Error was encountered", javax.swing.JOptionPane.ERROR_MESSAGE);
+		Reference.logger.error(message);
 
 	}
 	
