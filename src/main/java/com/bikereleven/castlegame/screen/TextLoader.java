@@ -2,9 +2,7 @@ package com.bikereleven.castlegame.screen;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.Iterator;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import com.bikereleven.castlegame.utility.Reference;
@@ -29,10 +27,10 @@ public abstract class TextLoader {
 	private static String loadDialog(String key) throws Exception {
 
 		Iterator<String> itt = Splitter.on(".").limit(3).split(key).iterator();
-		String fileURL = String.format("/assets/castlegame/text/%s/%s-%s.txt", Reference.localization, itt.next(), itt.next());
+		String fileURL = String.format("/assets/castlegame/text/%s/%s-%s.txt", Reference.LOCALIZATION, itt.next(), itt.next());
 		String dialogKey = itt.next();
 		
-		Reference.logger.traceEntry("Dialog loader attempting to load File:({}) Key:({})", fileURL, dialogKey);
+		Reference.LOGGER.traceEntry("Dialog loader attempting to load File:({}) Key:({})", fileURL, dialogKey);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(TextLoader.class.getResourceAsStream(fileURL)));
 		try {
@@ -47,7 +45,7 @@ public abstract class TextLoader {
 			}
 		} finally {
 			in.close();
-			Reference.logger.traceExit();
+			Reference.LOGGER.traceExit();
 		}
 
 		throw new Exception();
@@ -59,17 +57,22 @@ public abstract class TextLoader {
 
 				@Override
 				public String load(String key) throws Exception {
-					Reference.logger.info("Dialog loader loaded {}", key);
+					Reference.LOGGER.info("Dialog loader loaded {}", key);
 					return loadDialog(key);
 				}
 
 			});
 
+	/**
+	 * This will retrieve a localization string from the cache or from the disk if it has not been requested before.
+	 * @param key Key for the string
+	 * @return The requested string or &lt;NO-TEXT&gt; if not found
+	 */
 	public static String request(String key) {
 		try {
 			return dialogs.get(key);
 		} catch (Exception e) {
-			Reference.logger.error("Dialog loader could not find {}", key);
+			Reference.LOGGER.error("Dialog loader could not find {}", key);
 			return "<NO-TEXT>";
 		}
 	}

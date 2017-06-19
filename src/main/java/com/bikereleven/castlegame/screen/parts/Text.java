@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 
 import com.bikereleven.castlegame.screen.Part;
+import com.bikereleven.castlegame.screen.Screen;
 import com.google.common.base.Strings;
 import static com.google.common.base.Preconditions.*;
 
@@ -33,7 +34,7 @@ public class Text extends Part {
 
 		g.drawString(value, x, y);
 	}
-
+	
 	public Text(String content) {
 		value = content;
 	}
@@ -79,6 +80,24 @@ public class Text extends Part {
 
 	public void setColor(Color color) {
 		this.color = checkNotNull(color);
+	}
+	
+	@Override
+	public int width() {
+		if (stringFont != null){
+			return Screen.getGraphicsContext().getFontMetrics(stringFont).stringWidth(value);
+		} else {
+			return Screen.getGraphicsContext().getFontMetrics().stringWidth(value);
+		}
+	}
+	
+	@Override
+	public int height() {
+		if (stringFont != null){
+			return Screen.getGraphicsContext().getFontMetrics(stringFont).getHeight();
+		} else {
+			return Screen.getGraphicsContext().getFontMetrics().getHeight();
+		}
 	}
 
 }

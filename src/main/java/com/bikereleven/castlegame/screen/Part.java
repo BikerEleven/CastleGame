@@ -1,6 +1,7 @@
 package com.bikereleven.castlegame.screen;
 
 import java.awt.Graphics;
+
 import static com.google.common.base.Preconditions.*;
 
 /**
@@ -17,6 +18,19 @@ public abstract class Part {
 
 	protected boolean interactive = false;
 
+	/**
+	 * This function checks to see if the object intersects with ours
+	 * @param g
+	 * @return
+	 */
+	protected boolean intersects(Graphics g){
+		boolean inter = false;
+		
+		
+		
+		return inter;
+	}
+	
 	/**
 	 * It's our turn for the part to draw itself onto the screen
 	 * 
@@ -136,6 +150,12 @@ public abstract class Part {
 	 */
 	public void onClick() {
 	} // Does nothing!
+	
+	public void onHover() {
+	}
+	
+	public void onDeHover(){
+	}
 
 	@Override
 	public String toString() {

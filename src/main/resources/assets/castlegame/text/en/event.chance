@@ -1,0 +1,4 @@
+#We need to think of a way to organize the event texts so we don't have massive files or a few million files
+NormalFeast.description=This is the first test event. It is the first of many. Yes there is no multiline support. So I hope whatever you type is not to long. We will have to explore other options if you really feel like typing paragraphs like this.
+NormalFeast.title=Tis a grand feast!
+NormalFeast.effect=You feel awesome that this displayed!

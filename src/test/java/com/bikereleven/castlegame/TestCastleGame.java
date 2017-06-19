@@ -14,6 +14,12 @@ public class TestCastleGame {
 		
 	}
 	
+	@Test public void docLoader2(){
+		
+		assertEquals("Failed DocLoaderTest", "Welcome to Castleprenuer!", TextLoader.request("screen.config.mainmenu.start"));
+		
+	}
+	
     /*
     @Test public void initTest() { //Test to see if the game survives to init
         //Implement me!

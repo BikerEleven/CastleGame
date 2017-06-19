@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import com.bikereleven.castlegame.entity.Entity;
+import com.bikereleven.castlegame.event.events.EntityDeath;
 import com.bikereleven.castlegame.event.events.ShutdownEvent;
 import com.bikereleven.castlegame.utility.Reference;
 import com.google.common.eventbus.DeadEvent;
@@ -29,20 +30,25 @@ public class World {
 	}
 
 	private void loadWorld() {
-
+		//TODO: Build me
 	}
 
 	private void saveWorld() {
-
+		//TODO: Build me
 	}
 
 	private void newGame() {
-
+		//TODO: Build me
+		
+		entities = new HashMap<UUID, Entity>();
+		resourceStore = new HashMap<String, Double>();
+		
 	}
 
 	private void init() {
 
 		getEventBus().register(new EventHook());
+		
 
 	}
 
@@ -56,17 +62,27 @@ public class World {
 
 	}
 
+	public static void gameOver() {
+		// TODO Auto-generated method stub
+	}
+
 	private class EventHook {
 		@Subscribe
 		public void onDeadEvent(DeadEvent evt) {
-			Reference.logger.warn("Encountered a dead event ({})", evt.getEvent());
+			Reference.LOGGER.warn("Encountered a dead event ({})", evt.getEvent());
 		}
 		
 		@Subscribe
 		public void onShutdownEvent(ShutdownEvent evt) {
-			Reference.logger.info("Game is shuting down");
+			Reference.LOGGER.info("Game is shuting down");
 			exit();
 		}
+		
+		@Subscribe
+		public void onEntityDeath(EntityDeath evt){
+			entities.remove(evt.getID());
+		}
+		
 	}
 
 }

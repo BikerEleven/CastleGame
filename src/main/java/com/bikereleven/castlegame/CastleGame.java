@@ -6,7 +6,7 @@ public class CastleGame {
 	
 	public static void main(String[] args){
 		
-		
+		//TODO: Build a game
 		
 	}
 	
@@ -51,7 +51,7 @@ public class CastleGame {
 		errorText.setText(message);
 
 		javax.swing.JOptionPane.showMessageDialog(parent, errorText, "An Error was encountered", javax.swing.JOptionPane.ERROR_MESSAGE);
-		Reference.logger.error(message);
+		Reference.LOGGER.error(message);
 
 	}
 	
