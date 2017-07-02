@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import static com.google.common.base.Preconditions.*;
 
 import com.bikereleven.castlegame.entity.Entity;
-import com.bikereleven.castlegame.screen.TextLoader;
+import com.bikereleven.castlegame.ui.TextLoader;
 
 public class NPC extends Entity {
 

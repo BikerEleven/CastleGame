@@ -1,6 +1,6 @@
-package com.bikereleven.castlegame.screen.configs;
+package com.bikereleven.castlegame.ui.configs;
 
-import com.bikereleven.castlegame.screen.Config;
+import com.bikereleven.castlegame.ui.Config;
 
 public class MainScreen extends Config {
 

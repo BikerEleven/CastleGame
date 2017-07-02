@@ -2,7 +2,8 @@ package com.bikereleven.castlegame;
 
 import org.junit.Test;
 
-import com.bikereleven.castlegame.screen.TextLoader;
+import com.bikereleven.castlegame.ui.Sound;
+import com.bikereleven.castlegame.ui.TextLoader;
 
 import static org.junit.Assert.*;
 
@@ -14,9 +15,9 @@ public class TestCastleGame {
 		
 	}
 	
-	@Test public void docLoader2(){
+	@Test public void soundTest(){
 		
-		assertEquals("Failed DocLoaderTest", "Welcome to Castleprenuer!", TextLoader.request("screen.config.mainmenu.start"));
+		new Sound("test.wav").setLooping(true).play();
 		
 	}
 	

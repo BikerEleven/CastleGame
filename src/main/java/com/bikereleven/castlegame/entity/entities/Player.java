@@ -8,7 +8,7 @@ public class Player extends Entity {
 	@Override
 	protected void onDeath() {
 		
-		World.gameOver();//Dum dum dummmm!
+		World.getInstance().gameOver();//Dum dum dummmm!
 		
 	}
 	

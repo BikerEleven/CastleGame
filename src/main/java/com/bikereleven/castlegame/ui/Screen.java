@@ -1,4 +1,4 @@
-package com.bikereleven.castlegame.screen;
+package com.bikereleven.castlegame.ui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.KeyStroke;
 
 import com.bikereleven.castlegame.utility.Reference;
+import com.bikereleven.castlegame.world.World;
 
 /**
  * This class will manage our screen and delegate the drawing of it's parts
@@ -20,6 +21,8 @@ public class Screen implements Runnable {
 	
 	private static Graphics generalGraphics;
 	private static Config loadedConfig;
+	
+	private static Screen instance;
 	
 	private static JFrame appWindow;
 	
@@ -52,14 +55,24 @@ public class Screen implements Runnable {
 		
 	}
 	
-	public static Graphics getGraphicsContext(){
-		return generalGraphics;
-	}
-	
-	public Screen(){
+	private Screen(){
 		
 		init();
 		
+	}
+	
+	public static Screen getInstance(){
+		if (instance == null) createScreen();
+		return instance;
+	}
+	
+	public static Screen createScreen(){
+		if (instance == null) instance = new Screen();
+		return instance;
+	}
+
+	public static Graphics getGraphicsContext(){
+		return generalGraphics;
 	}
 	
 	/**
@@ -67,7 +80,7 @@ public class Screen implements Runnable {
 	 * @param key KeyStroke to register you <b>MUST</b> retain this object if you wish to unbind the KeyStroke later
 	 * @param act The Abstract action to be executed when the keybind is pressed.
 	 */
-	public static void addKeyBinding(KeyStroke key, Action act){
+	public void addKeyBinding(KeyStroke key, Action act){
 		((JComponent) appWindow.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(key, key);
 		((JComponent) appWindow.getContentPane()).getActionMap().put(key, act);
 	}
@@ -76,45 +89,19 @@ public class Screen implements Runnable {
 	 * This will attempt to unbind a previously bound KeyStroke from the component
 	 * @param key The KeyStoke object that was used to register the bind
 	 */
-	public static void removeKeyBinding(KeyStroke key){
+	public void removeKeyBinding(KeyStroke key){
 		((JComponent) appWindow.getContentPane()).getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).remove(key);
 		((JComponent) appWindow.getContentPane()).getActionMap().remove(key);
+	}
+	
+	public void tick(){
+		
 	}
 	
 	@Override
 	public void run() {
 		
-		while (appWindow.isDisplayable()){
-			long now = System.nanoTime();
-	        long passedTime = now - lastTime;
-	        lastTime = now;
-	        if (passedTime < 0) passedTime = 0;
-	        if (passedTime > 100000000) passedTime = 100000000; //0.1 second in nanoseconds
-
-	        unprocessedSeconds += passedTime / 1000000000.0;
-
-	        boolean rendered = false;
-	        while (unprocessedSeconds > 50000000) {
-	        	render();
-	            frames++;
-	            unprocessedSeconds -= 50000000;
-	            rendered = true;
-
-	            if (++tickCount % 60 == 0) {
-	            	if (frames < 55) Reference.LOGGER.trace("Loged low framerate {}", frames);
-	                lastTime += 1000;
-	                frames = 0;
-	            }
-	        }
-
-	        if (!rendered) {
-	            try {
-	                Thread.sleep(16);
-	            } catch (InterruptedException err) {
-	                Reference.LOGGER.error(err);
-	            }
-	        }
-		}
+		
 		
 	}
 	

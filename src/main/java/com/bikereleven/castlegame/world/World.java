@@ -19,6 +19,8 @@ public class World {
 	// private static TimePiece time; //Currently the TimePiece is abstract so
 	// keeping an instance is not needed.
 	private static EventBus ebus;
+	
+	private static World instance;
 
 	public static EventBus createDefaultEventBus() {
 		ebus = new EventBus();
@@ -45,25 +47,36 @@ public class World {
 		
 	}
 
-	private void init() {
+	public void init() {
 
 		getEventBus().register(new EventHook());
-		
 
 	}
-
-	public World() {
-
+	
+	private World(){
 		init();
-
+	}
+	
+	public void tick() {
+		
 	}
 
 	public void exit() {
 
 	}
 
-	public static void gameOver() {
+	public void gameOver() {
 		// TODO Auto-generated method stub
+	}
+	
+	public static World getInstance(){
+		if (instance == null) createWorld();
+		return instance;
+	}
+	
+	public static World createWorld(){
+		if (instance == null) instance = new World();
+		return instance;
 	}
 
 	private class EventHook {

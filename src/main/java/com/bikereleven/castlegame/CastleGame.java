@@ -1,14 +1,84 @@
 package com.bikereleven.castlegame;
 
+import com.bikereleven.castlegame.ui.Screen;
 import com.bikereleven.castlegame.utility.Reference;
+import com.bikereleven.castlegame.world.World;
 
 public class CastleGame {
+	
+	private static boolean runLoop = false;
 	
 	public static void main(String[] args){
 		
 		//TODO: Build a game
 		
+		init();
+		gameLoop();
+		
 	}
+	
+	private static void init() {
+
+		// Init Modules
+
+		World.createWorld();
+		Screen.createScreen();
+		//Sound.init(); //Might toss this into screen
+
+		// End init
+
+		runLoop = true;
+
+	}
+	
+	private static void gameLoop(){
+		
+		int frames = 0;
+
+		double unprocessedSeconds = 0;
+		long lastTime = System.nanoTime();
+		double secondsPerTick = 1 / 20.0; //Run the world 20 times a second
+		int tickCount = 0;
+
+		while (runLoop) {
+			long now = System.nanoTime();
+			long passedTime = now - lastTime;
+			lastTime = now;
+			if (passedTime < 0)
+				passedTime = 0;
+			if (passedTime > (10^8))
+				passedTime = 10^8;
+
+			unprocessedSeconds += passedTime / 1.0 * (10^9);
+
+			boolean ticked = false;
+			while (unprocessedSeconds > secondsPerTick) {
+				World.getInstance().tick();
+				unprocessedSeconds -= secondsPerTick;
+				ticked = true;
+				
+				if (++tickCount % 60 == 0) {
+	            	if (frames < 55) Reference.LOGGER.trace("Loged low framerate {}", frames);
+	                lastTime += 1000;
+	                frames = 0;
+	            }
+				
+			}
+
+			if (ticked) { //We really only need to render new things whenever something updates
+				Screen.getInstance().tick();
+				frames++;
+			} else {
+				try {
+					Thread.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
 	
 	/**
 	 * Will figure out the location of the data file and return the file

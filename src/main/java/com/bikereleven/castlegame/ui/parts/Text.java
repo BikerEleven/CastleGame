@@ -1,11 +1,11 @@
-package com.bikereleven.castlegame.screen.parts;
+package com.bikereleven.castlegame.ui.parts;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 
-import com.bikereleven.castlegame.screen.Part;
-import com.bikereleven.castlegame.screen.Screen;
+import com.bikereleven.castlegame.ui.Part;
+import com.bikereleven.castlegame.ui.Screen;
 import com.google.common.base.Strings;
 import static com.google.common.base.Preconditions.*;
 

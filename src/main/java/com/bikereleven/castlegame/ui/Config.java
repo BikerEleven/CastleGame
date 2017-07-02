@@ -1,4 +1,4 @@
-package com.bikereleven.castlegame.screen;
+package com.bikereleven.castlegame.ui;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public abstract class Config {
 		KeyStroke stroke = KeyStroke.getKeyStroke(key, modf);
 		keyBinds.put(id, stroke);
 		
-		Screen.addKeyBinding(stroke, checkNotNull(act, "The action can not be null"));
+		Screen.getInstance().addKeyBinding(stroke, checkNotNull(act, "The action can not be null"));
 	}
 	
 	/**
@@ -71,7 +71,7 @@ public abstract class Config {
 	 */
 	protected void unbind(String id){
 		checkArgument(keyBinds.containsKey(id), "KeyBind id {%s} not found", id);
-		Screen.removeKeyBinding(keyBinds.remove(id));
+		Screen.getInstance().removeKeyBinding(keyBinds.remove(id));
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public abstract class Config {
 	 */
 	protected void unbindKeys(){
 		for (KeyStroke key : keyBinds.values()){
-			Screen.removeKeyBinding(key);
+			Screen.getInstance().removeKeyBinding(key);
 		}
 		
 		keyBinds.clear();

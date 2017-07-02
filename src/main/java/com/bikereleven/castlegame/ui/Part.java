@@ -1,4 +1,4 @@
-package com.bikereleven.castlegame.screen;
+package com.bikereleven.castlegame.ui;
 
 import java.awt.Graphics;
 

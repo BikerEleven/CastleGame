@@ -1,4 +1,4 @@
-package com.bikereleven.castlegame.screen;
+package com.bikereleven.castlegame.ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,8 +32,7 @@ public abstract class TextLoader {
 		
 		Reference.LOGGER.traceEntry("Dialog loader attempting to load File:({}) Key:({})", fileURL, dialogKey);
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(TextLoader.class.getResourceAsStream(fileURL)));
-		try {
+		try (BufferedReader in = new BufferedReader(new InputStreamReader(TextLoader.class.getResourceAsStream(fileURL)))) {
 			String line = null;
 			while ((line = in.readLine()) != null) {
 				if (line.trim().startsWith("#")) continue;
@@ -44,7 +43,6 @@ public abstract class TextLoader {
 				}
 			}
 		} finally {
-			in.close();
 			Reference.LOGGER.traceExit();
 		}
 
