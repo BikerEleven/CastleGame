@@ -1,8 +1,8 @@
 package com.bikereleven.castlegame.ui;
 
-import java.awt.Graphics;
+import static com.google.common.base.Preconditions.checkArgument;
 
-import static com.google.common.base.Preconditions.*;
+import java.awt.Graphics;
 
 /**
  * This class represents a template for an object that can be drawn to the
@@ -20,17 +20,16 @@ public abstract class Part {
 
 	/**
 	 * This function checks to see if the object intersects with ours
+	 * 
 	 * @param g
 	 * @return
 	 */
-	protected boolean intersects(Graphics g){
+	protected boolean intersects(Graphics g) {
 		boolean inter = false;
-		
-		
-		
+
 		return inter;
 	}
-	
+
 	/**
 	 * It's our turn for the part to draw itself onto the screen
 	 * 
@@ -150,11 +149,11 @@ public abstract class Part {
 	 */
 	public void onClick() {
 	} // Does nothing!
-	
+
 	public void onHover() {
 	}
-	
-	public void onDeHover(){
+
+	public void onDeHover() {
 	}
 
 	@Override

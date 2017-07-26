@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import com.bikereleven.castlegame.ui.Part;
 import com.bikereleven.castlegame.ui.Screen;
+import com.bikereleven.castlegame.utility.Reference;
 import com.google.common.base.Strings;
 import static com.google.common.base.Preconditions.*;
 
@@ -36,6 +37,7 @@ public class Text extends Part {
 	}
 	
 	public Text(String content) {
+		checkArgument(!Strings.isNullOrEmpty(content), "The text must not be null or empty");
 		value = content;
 	}
 
@@ -68,7 +70,7 @@ public class Text extends Part {
 		this.color = checkNotNull(color);
 	}
 
-	public void setSize(float size) {
+	public Part setSize(float size) {
 		checkArgument(size > 0, "Argument (%s) must be greater than zero", size);
 
 		if (stringFont != null) {
@@ -76,10 +78,23 @@ public class Text extends Part {
 		}
 
 		this.size = size;
+		
+		return this;
+	}
+	
+	public String getText(){
+		return value;
+	}
+	
+	public Text setText(String text){
+		checkArgument(!Strings.isNullOrEmpty(text), "The text must not be null or empty");
+		value = text;
+		return this;
 	}
 
-	public void setColor(Color color) {
+	public Text setColor(Color color) {
 		this.color = checkNotNull(color);
+		return this;
 	}
 	
 	@Override
@@ -98,6 +113,11 @@ public class Text extends Part {
 		} else {
 			return Screen.getGraphicsContext().getFontMetrics().getHeight();
 		}
+	}
+	
+	@Override
+	public void onClick() {
+		Reference.LOGGER.trace("Someone clicked me!");
 	}
 
 }

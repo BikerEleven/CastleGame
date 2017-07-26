@@ -3,9 +3,12 @@ package com.bikereleven.castlegame.world;
 import java.util.HashMap;
 import java.util.UUID;
 
+import com.bikereleven.castlegame.CastleGame;
 import com.bikereleven.castlegame.entity.Entity;
 import com.bikereleven.castlegame.event.events.EntityDeath;
 import com.bikereleven.castlegame.event.events.ShutdownEvent;
+import com.bikereleven.castlegame.ui.Screen;
+import com.bikereleven.castlegame.ui.configs.MainScreen;
 import com.bikereleven.castlegame.utility.Reference;
 import com.google.common.eventbus.DeadEvent;
 import com.google.common.eventbus.EventBus;
@@ -14,7 +17,7 @@ import com.google.common.eventbus.Subscribe;
 public class World {
 
 	private static HashMap<UUID, Entity> entities;
-	private static HashMap<String, Double> resourceStore;
+	//private static HashMap<String, Double> resourceStore;
 
 	// private static TimePiece time; //Currently the TimePiece is abstract so
 	// keeping an instance is not needed.
@@ -31,19 +34,21 @@ public class World {
 		return (ebus == null ? createDefaultEventBus() : ebus);
 	}
 
+	/*
 	private void loadWorld() {
 		//TODO: Build me
 	}
 
 	private void saveWorld() {
 		//TODO: Build me
-	}
+	}*/
 
-	private void newGame() {
+	public void newGame() {
 		//TODO: Build me
 		
 		entities = new HashMap<UUID, Entity>();
-		resourceStore = new HashMap<String, Double>();
+		
+		//resourceStore = new HashMap<String, Double>();
 		
 	}
 
@@ -55,14 +60,12 @@ public class World {
 	
 	private World(){
 		init();
+		
+		Screen.getInstance().loadConfig(new MainScreen());
 	}
 	
 	public void tick() {
 		
-	}
-
-	public void exit() {
-
 	}
 
 	public void gameOver() {
@@ -88,13 +91,17 @@ public class World {
 		@Subscribe
 		public void onShutdownEvent(ShutdownEvent evt) {
 			Reference.LOGGER.info("Game is shuting down");
-			exit();
+			CastleGame.exit();
 		}
 		
 		@Subscribe
 		public void onEntityDeath(EntityDeath evt){
 			entities.remove(evt.getID());
 		}
+		
+	}
+
+	public void cleanup() {
 		
 	}
 

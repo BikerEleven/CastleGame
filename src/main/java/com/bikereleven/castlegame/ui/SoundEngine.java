@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -18,24 +19,23 @@ import com.google.common.cache.LoadingCache;
 public class SoundEngine {
 
 	private static SoundEngine instance;
-	//private static SourceDataLine bgSound;
+	// private static SourceDataLine bgSound;
 
-	private static Clip loadClipSource(URL source)
+	private Clip loadClipSource(URL source)
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		Reference.LOGGER.traceEntry("Loading sound clip ({})", source);
 		AudioInputStream ais = AudioSystem.getAudioInputStream(source);
 		Clip clip = AudioSystem.getClip();
 		clip.open(ais);
-		
-		Reference.LOGGER.traceExit();
-		return clip;
+
+		return Reference.LOGGER.traceExit(clip);
 	}
 
 	/**
 	 * This manages the internal cache of sound sources so we can replay a sound
 	 * at a moments notice
 	 */
-	private static LoadingCache<URL, Clip> soundCache = CacheBuilder.newBuilder().maximumSize(10)
+	private LoadingCache<URL, Clip> soundCache = CacheBuilder.newBuilder().maximumSize(10)
 			.build(new CacheLoader<URL, Clip>() {
 				@Override
 				public Clip load(URL key) throws Exception {
@@ -43,13 +43,11 @@ public class SoundEngine {
 				}
 			});
 
-	private SoundEngine() {
-	}
-
 	/*
-	private void switchbgSource(URL source) {
-
-	}*/
+	 * private void switchbgSource(URL source) {
+	 * 
+	 * }
+	 */
 
 	protected void playClip(Sound sound) {
 		Reference.LOGGER.traceEntry("Attempting to play sound {}", sound);
@@ -60,7 +58,8 @@ public class SoundEngine {
 					synchronized (clip) {
 						clip.stop();
 						clip.setFramePosition(sound.getPlayFrame());
-						if (sound.isLooping()){
+						((FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN)).setValue(sound.getGain());
+						if (sound.isLooping()) {
 							clip.setLoopPoints(0, -1);
 							clip.loop(Clip.LOOP_CONTINUOUSLY);
 						} else {
@@ -72,7 +71,7 @@ public class SoundEngine {
 		} catch (ExecutionException err) {
 			Reference.LOGGER.error("Failed to load a clip", err);
 		}
-		
+
 		Reference.LOGGER.traceExit();
 	}
 
@@ -94,30 +93,44 @@ public class SoundEngine {
 		} catch (ExecutionException err) {
 			Reference.LOGGER.error("Failed to load a clip", err);
 		}
-		
+
 		return null;
 	}
-	
+
 	protected Clip getClip(URL source) {
 		try {
 			return soundCache.get(source);
 		} catch (ExecutionException err) {
 			Reference.LOGGER.error("Failed to load a clip", err);
 		}
-		
+
 		return null;
 	}
 
+	/**
+	 * Will always return an instance of the Sound Engine. If one did not
+	 * already exist it will create a default engine.
+	 * 
+	 * @return The Sound Engine
+	 */
 	public static SoundEngine getInstance() {
 		if (instance == null)
 			createSoundEngine();
 		return instance;
 	}
 
+	/**
+	 * Creates a default sound engine if one does not already exist
+	 * 
+	 * @return Either the created sound engine
+	 */
 	public static SoundEngine createSoundEngine() {
 		if (instance == null)
 			instance = new SoundEngine();
 		return instance;
+	}
+
+	public void cleanup() {		
 	}
 
 }
